@@ -31,7 +31,7 @@ public class Cell extends AgentSQ2D<Grid> {
 
     public void endoGrow(Cell cell) {
         if (this.ticksSinceLastGrowth >= Constants.endoBranchDelayTime * Constants.ticksPerHour && this.VEGF >= Constants.endoBranchingVEGFThreshold) {
-            //
+
         }
     }
 

@@ -28,36 +28,28 @@ public class Grid extends AgentGrid2D<Cell> {
 
     }
 
-    public void DrawModel(GridWindow win){
-        for (int i = 0; i < win.length; i++) {
-            int color = Util.BLACK;
-            if (GetAgent(i) != null) {
-                Cell cell = GetAgent(i);
-                color = cell.color;
-            }
-            win.SetPix(i, color);
-        }
-    }
-
-    public void DrawRadius() {
-        int i = 0;
+    public void DrawModel(GridWindow win) {
         for (int x = 0; x < Constants.x; x++) {
             for (int y = 0; y < Constants.y; y++) {
-                double dist = distance(x, y, (double) Constants.x / 2, (double) Constants.y / 2);
-                if (dist > Constants.radius) {
-                    Cell agent = NewAgentSQ(x, y);
-                    agent.init(Constants.epiColor, Constants.epithelial, 0, x, y);
-                } else if (Math.abs(dist - Constants.radius) <= 1 && dist < Constants.radius) {
-                    Cell agent = NewAgentSQ(x, y);
-                    if (i % 20 == 0) {
-                        agent.init(Constants.endoColor, Constants.endothelial, 0, x, y);
-                } else {
-                        agent.init(Constants.epiColor, Constants.epithelial, 0, x, y);
-                    }
-                    i++;
+                int color = Util.BLACK;
+                if (GetAgent(x, y) != null) {
+                    Cell cell = GetAgent(x, y);
+                    color = cell.color;
+                    System.out.println(cell.color);
+                }
+                win.SetPix(x, y, color);
             }
         }
-
+    }
+    public void DrawRadius() {
+        final int numEndos = 20;
+        final int radius = (int) (Constants.x / 2.2);
+        for (int i = 0; i < numEndos; i++) {
+            int angle = i * 360 / numEndos;
+            int x = (int) (Constants.x / 2.0 + radius * Math.cos(angle));
+            int y = (int) (Constants.y / 2.0 + radius * Math.sin(angle));
+            Cell endo = NewAgentSQ(x, y);
+            endo.init(Constants.endoColor, Constants.endothelial, 0, x, y);
         }
     }
 
