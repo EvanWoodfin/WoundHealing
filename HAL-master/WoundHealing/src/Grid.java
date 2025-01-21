@@ -8,7 +8,7 @@ import static java.awt.geom.Point2D.distance;
 
 public class Grid extends AgentGrid2D<Cell> {
 
-    public final PDEGrid2D VEGF;
+    PDEGrid2D VEGF;
 
     public Grid(int x, int y, PDEGrid2D VEGF) {
 
@@ -35,7 +35,6 @@ public class Grid extends AgentGrid2D<Cell> {
                 if (GetAgent(x, y) != null) {
                     Cell cell = GetAgent(x, y);
                     color = cell.color;
-                    System.out.println(cell.color);
                 }
                 win.SetPix(x, y, color);
             }
@@ -49,7 +48,10 @@ public class Grid extends AgentGrid2D<Cell> {
             int x = (int) (Constants.x / 2.0 + radius * Math.cos(angle));
             int y = (int) (Constants.y / 2.0 + radius * Math.sin(angle));
             Cell endo = NewAgentSQ(x, y);
-            endo.init(Constants.endoColor, Constants.endothelial, 0, x, y);
+            VEGF.Add(x, y, 0.5);
+            VEGF.Diffusion(0.25);
+            endo.init(Constants.endoColor, Constants.endothelial, VEGF.Get(x, y), true, x, y);
+            System.out.println(endo.VEGF);
         }
     }
 

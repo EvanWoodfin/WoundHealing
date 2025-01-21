@@ -8,35 +8,41 @@ public class Cell extends AgentSQ2D<Grid> {
     int ticksSinceLastGrowth;
     int x;
     int y;
-    int VEGF;
+    double VEGF;
+    boolean isTipCell;
 
-    public void init(int color, int type, int VEGF, int x, int y) {
+    public void init(int color, int type, double VEGF, boolean isTipCell, int x, int y) {
         this.color = color;
         this.type = type;
         this.ticksSinceLastGrowth = 0;
         this.x = x;
         this.y = y;
         this.VEGF = VEGF;
+        this.isTipCell = isTipCell;
     }
 
     public void step() {
         this.ticksSinceLastGrowth += 1;
         if (this.type == Constants.endothelial) {
-            endoGrow(this);
+            endoGrow();
         }
         if (this.type == Constants.epithelial) {
-            epiGrow(this);
+            epiGrow();
         }
     }
 
-    public void endoGrow(Cell cell) {
+    public void endoGrow() {
         if (this.ticksSinceLastGrowth >= Constants.endoBranchDelayTime * Constants.ticksPerHour && this.VEGF >= Constants.endoBranchingVEGFThreshold) {
 
         }
     }
 
-    public void epiGrow(Cell cell) {
+    public void epiGrow() {
         
+    }
+
+    public void stop() {
+
     }
 
 }
